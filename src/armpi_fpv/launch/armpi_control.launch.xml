@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- 控制器配置文件 -->
+  <arg name="controller_config_file" doc="Config file used for defining the ROS-Control controllers."/>
+  <arg name="controllers" default="joint_state_controller eff_joint_traj_controller gripper_controller" doc="Controllers that are activated by default."/>
+  <arg name="stopped_controllers" default="joint_group_eff_controller gripper_inner_controller" doc="Controllers that are initially loaded, but not started."/>
+  
+  <!-- Gazebo参数 -->
+  <arg name="paused" default="false" doc="Starts Gazebo in paused mode" />
+  <arg name="gui" default="true" doc="Starts Gazebo gui" />
+  
+  <!-- 启动Gazebo -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" default="worlds/empty.world"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="gui" value="$(arg gui)"/>
+  </include>
+  
+  <!-- 在Gazebo中加载机器人模型 -->
+  <node name="spawn_robot" pkg="gazebo_ros" type="spawn_model"
+        args="-param robot_description -urdf -model armpi" />
+  
+  <!-- 加载控制器 -->
+  <rosparam file="$(arg controller_config_file)" command="load"/>
+  
+  <!-- 启动控制器管理器 -->
+  <node name="ros_control_controller_spawner" pkg="controller_manager" type="spawner"
+        args="$(arg controllers)" respawn="false" output="screen"/>
+  
+  <!-- 加载但不启动的控制器 -->
+  <node name="ros_control_stopped_controller_spawner" pkg="controller_manager" type="spawner"
+        args="--stopped $(arg stopped_controllers)" respawn="false" output="screen"/>
+</launch>
+

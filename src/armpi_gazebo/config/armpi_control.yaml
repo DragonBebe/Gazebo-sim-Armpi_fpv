@@ -1,0 +1,49 @@
+# 关节状态控制器
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 125
+
+# 机械臂控制器
+arm_controller:
+  type: effort_controllers/JointTrajectoryController
+  joints:
+    - joint1
+    - joint2
+    - joint3
+    - joint4
+    - joint5
+  gains:
+    joint1: {p: 4000, d: 200, i: 1, i_clamp: 1}
+    joint2: {p: 10000, d: 200, i: 1, i_clamp: 1}
+    joint3: {p: 2000, d: 20, i: 1, i_clamp: 1}
+    joint4: {p: 500, d: 1, i: 1, i_clamp: 1}
+    joint5: {p: 500, d: 1, i: 1, i_clamp: 1}
+  constraints:
+    goal_time: 0.6
+    stopped_velocity_tolerance: 0.05
+    joint1: {trajectory: 0.1, goal: 0.1}
+    joint2: {trajectory: 0.1, goal: 0.1}
+    joint3: {trajectory: 0.1, goal: 0.1}
+    joint4: {trajectory: 0.1, goal: 0.1}
+    joint5: {trajectory: 0.1, goal: 0.1}
+  stop_trajectory_duration: 0.5
+  state_publish_rate: 125
+  action_monitor_rate: 10
+
+# 夹爪控制器 - 修正关节名称
+gripper_controller:
+  type: effort_controllers/JointTrajectoryController
+  joints:
+    - r_joint
+    # 检查URDF文件，确认正确的关节名称
+    # 错误显示找不到l_joint，可能需要修改为正确的名称
+  gains:
+    r_joint: {p: 100, d: 10, i: 0, i_clamp: 1}
+  constraints:
+    goal_time: 0.6
+    stopped_velocity_tolerance: 0.05
+    r_joint: {trajectory: 0.1, goal: 0.1}
+  stop_trajectory_duration: 0.5
+  state_publish_rate: 125
+  action_monitor_rate: 10
+

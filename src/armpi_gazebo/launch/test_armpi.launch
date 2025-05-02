@@ -1,0 +1,25 @@
+<launch>
+  <!-- 设置robot_description参数 -->
+  <param name="robot_description" textfile="$(find armpi_gazebo)/urdf/gazebo_armpi_fpv.urdf" />
+  
+  <!-- 启动Gazebo -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+  
+  <!-- 生成机器人模型 -->
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" 
+        args="-urdf -param robot_description -model armpi_fpv -z 0.5" 
+        output="screen" />
+        
+  <!-- 启动robot_state_publisher -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  
+  <!-- 启动joint_state_publisher -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+</launch>
+

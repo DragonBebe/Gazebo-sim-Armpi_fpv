@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- 加载URDF模型到参数服务器 -->
+  <param name="robot_description" 
+         textfile="$(find armpi_fpv)/urdf/armpi_fpv.urdf" />
+
+  <!-- 启动Gazebo仿真环境 -->
+  <include file="$(find armpi_gazebo)/launch/armpi_gazebo.launch" />
+  
+  <!-- 等待1秒，确保Gazebo和模型已完全加载 -->
+  <node name="wait_for_gazebo" pkg="rostopic" type="rostopic"
+        args="hz /gazebo/model_states -w 5" output="screen" />
+  
+  <!-- 启动控制器 -->
+  <include file="$(find armpi_control)/launch/armpi_control.launch" />
+</launch>
+

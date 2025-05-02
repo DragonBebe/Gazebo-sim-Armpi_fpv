@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- 加载机械臂到Gazebo -->
+  <include file="$(find armpi_gazebo)/launch/armpi_gazebo.launch" />
+
+  <!-- 启动控制器 -->
+  <include file="$(find armpi_control)/launch/armpi_control.launch" />
+</launch>
+

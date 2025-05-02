@@ -1,0 +1,52 @@
+<launch>
+  <!-- 定义参数 -->
+  <arg name="gui" default="true" doc="启用GUI组件，包括图像查看器"/>
+  
+  <!-- 加载robot_description参数 -->
+  <param name="robot_description" 
+         textfile="$(find armpi_gazebo)/urdf/gazebo_armpi_fpv.urdf" />
+  
+  <!-- 加载控制器参数 -->
+  <rosparam file="$(find armpi_gazebo)/config/armpi_control.yaml" command="load"/>
+  
+  <!-- 启动 Gazebo -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find armpi_gazebo)/worlds/armpi.world"/>
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+  
+  <!-- 将机器人模型加载到 Gazebo -->
+  <node name="spawn_model" pkg="gazebo_ros" type="spawn_model" 
+        args="-urdf -param robot_description -model armpi_fpv -z 0.1" 
+        output="screen" />
+        
+  <!-- 启动机器人状态发布器 -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" 
+        type="robot_state_publisher" respawn="false" output="screen">
+    <remap from="/joint_states" to="/armpi_fpv/joint_states"/>
+  </node>
+  
+  <!-- 加载模拟关节插件的依赖项 - 使用参数确保不会出现编码问题 -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" 
+        type="joint_state_publisher" respawn="false" output="screen">
+    <remap from="/joint_states" to="/armpi_fpv/joint_states"/>
+    <param name="rate" value="50"/>
+    <param name="use_gui" value="false"/>
+  </node>
+  
+  <!-- 启动控制器 -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" 
+        respawn="false" output="screen" ns="/armpi_fpv"
+        args="joint_state_controller
+              arm_controller
+              gripper_controller"/>
+  
+  <!-- 相机图像可视化 -->
+  <node if="$(arg gui)" name="image_view" pkg="image_view" type="image_view" 
+        args="image:=/armpi_fpv/camera/image_raw" 
+        respawn="false" output="screen" />
+</launch>
