@@ -1,0 +1,10 @@
+<launch>
+  <!-- 启动Gazebo仿真 -->
+  <include file="$(find ur_gazebo)/launch/ur5_bringup.launch">
+    <arg name="gui" value="true"/>
+  </include>
+  
+  <!-- 等待几秒钟让Gazebo和控制器完全启动 -->
+  <node pkg="ur5_control" type="ur5_controller.py" name="ur5_controller" output="screen" launch-prefix="bash -c 'sleep 5; $0 $@'" />
+</launch>
+
