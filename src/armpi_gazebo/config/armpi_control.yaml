@@ -1,7 +1,15 @@
 # 关节状态控制器
 joint_state_controller:
   type: joint_state_controller/JointStateController
-  publish_rate: 125
+  publish_rate: 20
+  joints:
+    - joint1
+    - joint2
+    - joint3
+    - joint4
+    - joint5
+    - r_joint
+    - l_joint
 
 # 机械臂控制器
 arm_controller:
@@ -12,38 +20,31 @@ arm_controller:
     - joint3
     - joint4
     - joint5
+  # 大幅降低PID参数
   gains:
-    joint1: {p: 4000, d: 200, i: 1, i_clamp: 1}
-    joint2: {p: 10000, d: 200, i: 1, i_clamp: 1}
-    joint3: {p: 2000, d: 20, i: 1, i_clamp: 1}
-    joint4: {p: 500, d: 1, i: 1, i_clamp: 1}
-    joint5: {p: 500, d: 1, i: 1, i_clamp: 1}
+    joint1: {p: 10.0, d: 1.0, i: 0.0, i_clamp: 0.5}
+    joint2: {p: 10.0, d: 1.0, i: 0.0, i_clamp: 0.5}
+    joint3: {p: 5.0, d: 0.5, i: 0.0, i_clamp: 0.5}
+    joint4: {p: 2.0, d: 0.2, i: 0.0, i_clamp: 0.5}
+    joint5: {p: 2.0, d: 0.2, i: 0.0, i_clamp: 0.5}
+  # 更宽松的约束
   constraints:
-    goal_time: 0.6
-    stopped_velocity_tolerance: 0.05
-    joint1: {trajectory: 0.1, goal: 0.1}
-    joint2: {trajectory: 0.1, goal: 0.1}
-    joint3: {trajectory: 0.1, goal: 0.1}
-    joint4: {trajectory: 0.1, goal: 0.1}
-    joint5: {trajectory: 0.1, goal: 0.1}
-  stop_trajectory_duration: 0.5
-  state_publish_rate: 125
-  action_monitor_rate: 10
+    goal_time: 2.0
+    stopped_velocity_tolerance: 0.5
+    joint1: {trajectory: 0.5, goal: 0.5}
+    joint2: {trajectory: 0.5, goal: 0.5}
+    joint3: {trajectory: 0.5, goal: 0.5}
+    joint4: {trajectory: 0.5, goal: 0.5}
+    joint5: {trajectory: 0.5, goal: 0.5}
+  stop_trajectory_duration: 1.0
+  # 降低发布率
+  state_publish_rate: 20
+  action_monitor_rate: 5
 
-# 夹爪控制器 - 修正关节名称
+# 夹爪控制器
 gripper_controller:
-  type: effort_controllers/JointTrajectoryController
-  joints:
-    - r_joint
-    # 检查URDF文件，确认正确的关节名称
-    # 错误显示找不到l_joint，可能需要修改为正确的名称
-  gains:
-    r_joint: {p: 100, d: 10, i: 0, i_clamp: 1}
-  constraints:
-    goal_time: 0.6
-    stopped_velocity_tolerance: 0.05
-    r_joint: {trajectory: 0.1, goal: 0.1}
-  stop_trajectory_duration: 0.5
-  state_publish_rate: 125
-  action_monitor_rate: 10
+  type: effort_controllers/JointPositionController
+  joint: r_joint
+  # 极低的PID参数
+  pid: {p: 1.0, i: 0.0, d: 0.5}
 

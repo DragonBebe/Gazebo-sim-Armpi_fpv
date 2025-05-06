@@ -1,0 +1,25 @@
+physics:
+  type: ode
+  # 更小的步长以提高稳定性
+  max_step_size: 0.001
+  # 更慢的仿真以确保稳定性
+  real_time_factor: 0.1
+  # 降低更新率以减轻计算负担
+  real_time_update_rate: 100
+  ode:
+    solver:
+      # 使用更稳定的求解器
+      type: world
+      # 增加迭代次数以提高精度
+      iters: 200
+      min_step_size: 0.0001
+    constraints:
+      # 增加CFM值以提高稳定性
+      cfm: 0.01
+      # 增加ERP值以改善约束处理
+      erp: 0.5
+      # 降低最大校正速度
+      contact_max_correcting_vel: 1.0
+      # 增加接触面层厚度
+      contact_surface_layer: 0.005
+
