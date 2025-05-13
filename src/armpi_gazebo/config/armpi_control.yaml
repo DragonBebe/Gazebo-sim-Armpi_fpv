@@ -10,8 +10,12 @@ joint_state_controller:
     - joint5
     - r_joint
     - l_joint
+    - r_in_joint  
+    - r_out_joint 
+    - l_in_joint 
+    - l_out_joint 
 
-# 机械臂控制器
+# 机械臂控制器保持不变
 arm_controller:
   type: effort_controllers/JointTrajectoryController
   joints:
@@ -41,22 +45,29 @@ arm_controller:
   state_publish_rate: 20
   action_monitor_rate: 5
 
-# 夹爪控制器
+# 夹爪控制器 - 增加PID增益
+
 gripper_controller:
   type: effort_controllers/JointTrajectoryController
-  joints: ['r_joint']
+  joints: ['r_joint', 'l_joint', 'r_in_joint', 'r_out_joint', 'l_in_joint', 'l_out_joint']
   gains:
-    r_joint: {p: 0.5, i: 0.0, d: 0.1, i_clamp: 0.1}  # 降低P和D值，添加i_clamp
+    r_joint: {p: 0.5, i: 0.0, d: 0.1, i_clamp: 0.1}
+    l_joint: {p: 0.5, i: 0.0, d: 0.1, i_clamp: 0.1}
+    r_in_joint: {p: 0.01, i: 0.0, d: 0.0, i_clamp: 0.0}
+    r_out_joint: {p: 0.01, i: 0.0, d: 0.0, i_clamp: 0.0}
+    l_in_joint: {p: 0.01, i: 0.0, d: 0.0, i_clamp: 0.0}
+    l_out_joint: {p: 0.01, i: 0.0, d: 0.0, i_clamp: 0.0}
   joint_limit_margin: 0.1
   constraints:
-    goal_time: 1.0  # 增加目标时间
+    goal_time: 1.0
     stopped_velocity_tolerance: 0.01
-    r_joint: {trajectory: 0.2, goal: 0.2}  # 添加关节特定约束
+    r_joint: {trajectory: 0.2, goal: 0.2}
+    l_joint: {trajectory: 0.2, goal: 0.2}
+    r_in_joint: {trajectory: 0.2, goal: 0.2}
+    r_out_joint: {trajectory: 0.2, goal: 0.2}
+    l_in_joint: {trajectory: 0.2, goal: 0.2}
+    l_out_joint: {trajectory: 0.2, goal: 0.2}
   stop_trajectory_duration: 0.5
   state_publish_rate: 25
-
-
-
-
 
 

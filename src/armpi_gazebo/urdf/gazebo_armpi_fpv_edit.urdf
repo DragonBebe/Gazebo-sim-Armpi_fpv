@@ -437,274 +437,262 @@
     </actuator>
   </transmission>
 
-  <link name="grasping_frame"/>
+ <link name="grasping_frame"/>
 
-  <joint name="grasping_frame_joint" type="fixed">
-    <parent link="link5"/>
-    <child link="grasping_frame"/>
-    <origin xyz="0 0 0.1126" rpy="0 0 0"/>
-  </joint>
+<joint name="grasping_frame_joint" type="fixed">
+  <parent link="link5"/>
+  <child link="grasping_frame"/>
+  <origin xyz="0 0 0.1126" rpy="0 0 0"/>
+</joint>
 
-  <link name="gripper_base">
-    <inertial>
-      <origin xyz="0.00312 0.01432 0.03101" rpy="0 0 0" />
-      <mass value="0.0176105871345009" />
-      <inertia
-        ixx="1.5708815504179E-06"
-        ixy="2.51402116906045E-08"
-        ixz="-2.26426177315553E-08"
-        iyy="4.12752565554833E-06"
-        iyz="-5.90507564364135E-10"
-        izz="3.26180194932723E-06" />
-    </inertial>
+<link name="gripper_base">
+  <inertial>
+    <origin xyz="0.00312 0.01432 0.03101" rpy="0 0 0" />
+    <mass value="0.0176105871345009" />
+    <inertia
+      ixx="1.5708815504179E-06"
+      ixy="2.51402116906045E-08"
+      ixz="-2.26426177315553E-08"
+      iyy="4.12752565554833E-06"
+      iyz="-5.90507564364135E-10"
+      izz="3.26180194932723E-06" />
+  </inertial>
 
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://armpi_gazebo/meshes/gripper_base.STL" />
-      </geometry>
-      <material name="">
-        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
-      </material>
-    </visual>
-
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://armpi_gazebo/meshes/gripper_base.STL" />
-      </geometry>
-    </collision>
-  </link>
-
-  <!-- ? gripper_base ?? Gazebo ??????? -->
-  <gazebo reference="gripper_base">
-    <material>Gazebo/Grey</material>
-    <mu1>0.2</mu1>
-    <mu2>0.2</mu2>
-    <selfCollide>false</selfCollide>
-  </gazebo>
-
-  <joint name="gripper_base_joint" type="fixed">
+  <visual>
     <origin xyz="0 0 0" rpy="0 0 0" />
-    <parent link="link5" />
-    <child link="gripper_base" />
-    <axis xyz="0 0 0" />
-  </joint>
+    <geometry>
+      <mesh filename="package://armpi_gazebo/meshes/gripper_base.STL" />
+    </geometry>
+    <material name="">
+      <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+    </material>
+  </visual>
 
-  <link name="r_link">
-    <inertial>
-      <origin xyz="-0.00451 -0.00435 0.0015" rpy="0 0 0" />
-      <mass value="0.00206265425539028" />
-      <inertia
-        ixx="2.27206715089548E-07"
-        ixy="-1.19760468530682E-07"
-        ixz="-5.52626664650897E-14"
-        iyy="1.73118448241303E-07"
-        iyz="3.6212219660873E-14"
-        izz="3.97231131418846E-07" />
-    </inertial>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <geometry>
+      <mesh filename="package://armpi_gazebo/meshes/gripper_base.STL" />
+    </geometry>
+  </collision>
+</link>
 
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://armpi_gazebo/meshes/r_link.STL" />
-      </geometry>
-      <material name="">
-        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
-      </material>
-    </visual>
+<gazebo reference="gripper_base">
+  <material>Gazebo/Grey</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>false</selfCollide>
+</gazebo>
 
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://armpi_gazebo/meshes/r_link.STL" />
-      </geometry>
-    </collision>
-  </link>
+<joint name="gripper_base_joint" type="fixed">
+  <origin xyz="0 0 0" rpy="0 0 0" />
+  <parent link="link5" />
+  <child link="gripper_base" />
+  <axis xyz="0 0 0" />
+</joint>
 
-  <!-- ? r_link ?? Gazebo ??????? -->
-  <gazebo reference="r_link">
-    <material>Gazebo/Grey</material>
-    <mu1>1.0</mu1>
-    <mu2>1.0</mu2>
-    <kp>1000000.0</kp>
-    <kd>1.0</kd>
-    <selfCollide>false</selfCollide>
-  </gazebo>
+<link name="r_link">
+  <inertial>
+    <origin xyz="-0.00451 -0.00435 0.0015" rpy="0 0 0" />
+    <mass value="0.00206265425539028" />
+    <inertia
+      ixx="2.27206715089548E-07"
+      ixy="-1.19760468530682E-07"
+      ixz="-5.52626664650897E-14"
+      iyy="1.73118448241303E-07"
+      iyz="3.6212219660873E-14"
+      izz="3.97231131418846E-07" />
+  </inertial>
 
-  <joint name="r_joint" type="revolute">
-    <origin xyz="0.01399 -0.00748 0.03255" rpy="-1.5725 0.81063 0" />
-    <parent link="gripper_base" />
-    <child link="r_link" />
-    <axis xyz="0 0 -1" />
-    <limit lower="-2.57" upper="1.57" effort="20" velocity="5" />
-    <dynamics damping="0.1" friction="0.1"/>
-  </joint>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <geometry>
+      <mesh filename="package://armpi_gazebo/meshes/r_link.STL" />
+    </geometry>
+    <material name="">
+      <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+    </material>
+  </visual>
 
-  <!-- ?????????? -->
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <geometry>
+      <mesh filename="package://armpi_gazebo/meshes/r_link.STL" />
+    </geometry>
+  </collision>
+</link>
+
+<gazebo reference="r_link">
+  <material>Gazebo/Grey</material>
+  <mu1>1.0</mu1>
+  <mu2>1.0</mu2>
+  <kp>1000000.0</kp>
+  <kd>1.0</kd>
+  <selfCollide>false</selfCollide>
+</gazebo>
+
+<joint name="r_joint" type="revolute">
+  <origin xyz="0.01399 -0.00748 0.03255" rpy="-1.5725 0.81063 0" />
+  <parent link="gripper_base" />
+  <child link="r_link" />
+  <axis xyz="0 0 -1" />
+  <limit lower="-2.57" upper="1.00" effort="20" velocity="5" />
+  <dynamics damping="0.1" friction="0.1"/>
+</joint>
+
 <transmission name="trans_r_joint">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="r_joint">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="motor_r_joint">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-
-
-
-  <link name="r_in_link">
-    <inertial>
-      <origin xyz="-0.00954 -0.01092 0.006" rpy="0 0 0" />
-      <mass value="0.000776872870583588" />
-      <inertia
-        ixx="5.63560750477043E-08"
-        ixy="-4.72744633557675E-08"
-        ixz="-3.79461916645956E-21"
-        iyy="4.3559232177442E-08"
-        iyz="-2.93774244679845E-21"
-        izz="9.8750019150699E-08" />
-    </inertial>
-
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://armpi_gazebo/meshes/r_in_link.STL" />
-      </geometry>
-      <material name="">
-        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
-      </material>
-    </visual>
-
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://armpi_gazebo/meshes/r_in_link.STL" />
-      </geometry>
-    </collision>
-  </link>
-
-
-
-  <!-- ? r_in_link ?? Gazebo ??????? -->
-  <gazebo reference="r_in_link">
-    <material>Gazebo/Grey</material>
-    <mu1>0.2</mu1>
-    <mu2>0.2</mu2>
-    <selfCollide>false</selfCollide>
-  </gazebo>
-
-  <joint name="r_in_joint" type="revolute">
-    <origin xyz="0.00499 -0.0075 0.05152" rpy="-1.5725 0.81127 0" />
-    <parent link="gripper_base" />
-    <child link="r_in_link" />
-    <axis xyz="0 0 -1" />
-    <limit lower="-3.14" upper="3" effort="20" velocity="5" />
-    <mimic joint="r_joint" multiplier="1" offset="0" />
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="r_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
   </joint>
+  <actuator name="motor_r_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
 
+<link name="r_in_link">
+  <inertial>
+    <origin xyz="-0.00954 -0.01092 0.006" rpy="0 0 0" />
+    <mass value="0.000776872870583588" />
+    <inertia
+      ixx="5.63560750477043E-08"
+      ixy="-4.72744633557675E-08"
+      ixz="-3.79461916645956E-21"
+      iyy="4.3559232177442E-08"
+      iyz="-2.93774244679845E-21"
+      izz="9.8750019150699E-08" />
+  </inertial>
 
-  <link name="r_out_link">
-    <inertial>
-      <origin xyz="0.00921 -0.00318 -0.00148" rpy="0 0 0" />
-      <mass value="0.00384736745316057" />
-      <inertia
-        ixx="3.94300335300673E-08"
-        ixy="-7.61671057300203E-09"
-        ixz="-9.59541277441841E-12"
-        iyy="8.50841629381356E-07"
-        iyz="2.65061801639529E-13"
-        izz="8.77392844404812E-07" />
-    </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <geometry>
+      <mesh filename="package://armpi_gazebo/meshes/r_in_link.STL" />
+    </geometry>
+    <material name="">
+      <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+    </material>
+  </visual>
 
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://armpi_gazebo/meshes/r_out_link.STL" />
-      </geometry>
-      <material name="">
-        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
-      </material>
-    </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <geometry>
+      <mesh filename="package://armpi_gazebo/meshes/r_in_link.STL" />
+    </geometry>
+  </collision>
+</link>
 
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://armpi_gazebo/meshes/r_out_link.STL" />
-      </geometry>
-    </collision>
-  </link>
+<gazebo reference="r_in_link">
+  <material>Gazebo/Grey</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>false</selfCollide>
+</gazebo>
 
+<joint name="r_in_joint" type="revolute">
+  <origin xyz="0.00499 -0.0075 0.05152" rpy="-1.5725 0.81127 0" />
+  <parent link="gripper_base" />
+  <child link="r_in_link" />
+  <axis xyz="0 0 -1" />
+  <limit lower="-3.14" upper="3" effort="20" velocity="5" />
+  <mimic joint="r_joint" multiplier="1" offset="0" />
+</joint>
 
-  <!-- ? r_out_link ?? Gazebo ??????? -->
-  <gazebo reference="r_out_link">
-    <material>Gazebo/Grey</material>
-        <mu1>0.2</mu1>
-        <mu2>0.2</mu2>
-    <selfCollide>false</selfCollide>
-  </gazebo>
+<link name="r_out_link">
+  <inertial>
+    <origin xyz="0.00921 -0.00318 -0.00148" rpy="0 0 0" />
+    <mass value="0.00384736745316057" />
+    <inertia
+      ixx="3.94300335300673E-08"
+      ixy="-7.61671057300203E-09"
+      ixz="-9.59541277441841E-12"
+      iyy="8.50841629381356E-07"
+      iyz="2.65061801639529E-13"
+      izz="8.77392844404812E-07" />
+  </inertial>
 
-  <joint name="r_out_joint" type="revolute">
-    <origin xyz="-0.01908 -0.02184 0.0045" rpy="-3.1413 0 -2.5695" />
-    <parent link="r_in_link" />
-    <child link="r_out_link" />
-    <axis xyz="0 0 -1" />
-    <limit lower="-3" upper="3" effort="20" velocity="5" />
-    <mimic joint="r_joint" multiplier="1" offset="0" />
-  </joint>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <geometry>
+      <mesh filename="package://armpi_gazebo/meshes/r_out_link.STL" />
+    </geometry>
+    <material name="">
+      <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+    </material>
+  </visual>
 
-  <link name="l_link">
-    <inertial>
-      <origin xyz="-0.00526 0.0025 0" rpy="0 0 0" />
-      <mass value="0.00218927553366064" />
-      <inertia
-        ixx="1.46541548954489E-07"
-        ixy="1.1331545502853E-07"
-        ixz="1.86896328777135E-12"
-        iyy="2.6214517556132E-07"
-        iyz="-2.39207587891263E-13"
-        izz="4.05402978435981E-07" />
-    </inertial>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <geometry>
+      <mesh filename="package://armpi_gazebo/meshes/r_out_link.STL" />
+    </geometry>
+  </collision>
+</link>
 
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://armpi_gazebo/meshes/l_link.STL" />
-      </geometry>
-      <material name="">
-        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
-      </material>
-    </visual>
+<gazebo reference="r_out_link">
+  <material>Gazebo/Grey</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>false</selfCollide>
+</gazebo>
 
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://armpi_gazebo/meshes/l_link.STL" />
-      </geometry>
-    </collision>
-  </link>
+<joint name="r_out_joint" type="revolute">
+  <origin xyz="-0.01908 -0.02184 0.0045" rpy="-3.1413 0 -2.5695" />
+  <parent link="r_in_link" />
+  <child link="r_out_link" />
+  <axis xyz="0 0 -1" />
+  <limit lower="-3" upper="3" effort="20" velocity="5" />
+  <mimic joint="r_joint" multiplier="1" offset="0" />
+</joint>
 
-  <!-- ? l_link ?? Gazebo ??????? -->
-  <gazebo reference="l_link">
-    <material>Gazebo/Grey</material>
-    <mu1>1.0</mu1>
-    <mu2>1.0</mu2>
-    <kp>1000000.0</kp>
-    <kd>1.0</kd>
-    <selfCollide>false</selfCollide>
-  </gazebo>
+<link name="l_link">
+  <inertial>
+    <origin xyz="-0.00526 0.0025 0" rpy="0 0 0" />
+    <mass value="0.00218927553366064" />
+    <inertia
+      ixx="1.46541548954489E-07"
+      ixy="1.1331545502853E-07"
+      ixz="1.86896328777135E-12"
+      iyy="2.6214517556132E-07"
+      iyz="-2.39207587891263E-13"
+      izz="4.05402978435981E-07" />
+  </inertial>
 
-  <joint name="l_joint" type="revolute">
-    <origin xyz="-0.01401 -0.00603 0.03253" rpy="1.5692 1.149 3.1416" />
-    <parent link="gripper_base" />
-    <child link="l_link" />
-    <axis xyz="0 0 -1" />
-    <limit lower="-2.57" upper="1.57" effort="20" velocity="10" />
-    <mimic joint="r_joint" multiplier="-1" offset="0" />
-    <dynamics damping="0.1" friction="0.1"/>
-  </joint>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <geometry>
+      <mesh filename="package://armpi_gazebo/meshes/l_link.STL" />
+    </geometry>
+    <material name="">
+      <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+    </material>
+  </visual>
+
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <geometry>
+      <mesh filename="package://armpi_gazebo/meshes/l_link.STL" />
+    </geometry>
+  </collision>
+</link>
+
+<gazebo reference="l_link">
+  <material>Gazebo/Grey</material>
+  <mu1>1.0</mu1>
+  <mu2>1.0</mu2>
+  <kp>1000000.0</kp>
+  <kd>1.0</kd>
+  <selfCollide>false</selfCollide>
+</gazebo>
+
+<joint name="l_joint" type="revolute">
+  <origin xyz="-0.01401 -0.00603 0.03253" rpy="1.5692 1.149 3.1416" />
+  <parent link="gripper_base" />
+  <child link="l_link" />
+  <axis xyz="0 0 -1" />
+  <limit lower="-2.57" upper="1.57" effort="20" velocity="10" />
+  <mimic joint="r_joint" multiplier="-1" offset="0" />
+  <dynamics damping="0.1" friction="0.1"/>
+</joint>
 
 <transmission name="trans_l_joint">
   <type>transmission_interface/SimpleTransmission</type>
@@ -717,174 +705,219 @@
   </actuator>
 </transmission>
 
+<link name="l_in_link">
+  <inertial>
+    <origin xyz="0.00135 0.01444 0.0045" rpy="0 0 0" />
+    <mass value="0.000776872871244906" />
+    <inertia
+      ixx="9.68377592048552E-08"
+      ixy="-8.83574513058366E-09"
+      ixz="-8.99736402977211E-22"
+      iyy="3.07754813125031E-09"
+      iyz="-1.3466692021387E-20"
+      izz="9.87500192610647E-08" />
+  </inertial>
 
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <geometry>
+      <mesh filename="package://armpi_gazebo/meshes/l_in_link.STL" />
+    </geometry>
+    <material name="">
+      <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+    </material>
+  </visual>
 
-  <link name="l_in_link">
-    <inertial>
-      <origin xyz="0.00135 0.01444 0.0045" rpy="0 0 0" />
-      <mass value="0.000776872871244906" />
-      <inertia
-        ixx="9.68377592048552E-08"
-        ixy="-8.83574513058366E-09"
-        ixz="-8.99736402977211E-22"
-        iyy="3.07754813125031E-09"
-        iyz="-1.3466692021387E-20"
-        izz="9.87500192610647E-08" />
-    </inertial>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <geometry>
+      <mesh filename="package://armpi_gazebo/meshes/l_in_link.STL" />
+    </geometry>
+  </collision>
+</link>
 
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://armpi_gazebo/meshes/l_in_link.STL" />
-      </geometry>
-      <material name="">
-        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
-      </material>
-    </visual>
+<gazebo reference="l_in_link">
+  <material>Gazebo/Grey</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>false</selfCollide>
+</gazebo>
 
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://armpi_gazebo/meshes/l_in_link.STL" />
-      </geometry>
-    </collision>
-  </link>
+<joint name="l_in_joint" type="revolute">
+  <origin xyz="-0.00502 -0.006 0.05152" rpy="1.5719 0 3.1404" />
+  <parent link="gripper_base" />
+  <child link="l_in_link" />
+  <axis xyz="0 0 -1" />
+  <limit lower="-3" upper="3" effort="20" velocity="5" />
+  <mimic joint="r_joint" multiplier="-1" offset="0" />
+</joint>
 
+<link name="l_out_link">
+  <inertial>
+    <origin xyz="0.00921 -0.00318 0.00148" rpy="0 0 0" />
+    <mass value="0.00384736003408795" />
+    <inertia
+      ixx="3.94299868139123E-08"
+      ixy="-7.61977962794645E-09"
+      ixz="8.28793192035387E-12"
+      iyy="8.50830170189603E-07"
+      iyz="3.37534642199275E-12"
+      izz="8.77381368600846E-07" />
+  </inertial>
 
-  <!-- ? l_in_link ?? Gazebo ??????? -->
-  <gazebo reference="l_in_link">
-    <material>Gazebo/Grey</material>
-    <mu1>0.2</mu1>
-    <mu2>0.2</mu2>
-    <selfCollide>false</selfCollide>
-  </gazebo>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <geometry>
+      <mesh filename="package://armpi_gazebo/meshes/l_out_link.STL" />
+    </geometry>
+    <material name="">
+      <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+    </material>
+  </visual>
 
-  <joint name="l_in_joint" type="revolute">
-    <origin xyz="-0.00502 -0.006 0.05152" rpy="1.5719 0 3.1404" />
-    <parent link="gripper_base" />
-    <child link="l_in_link" />
-    <axis xyz="0 0 -1" />
-    <limit lower="-3" upper="3" effort="20" velocity="5" />
-    <mimic joint="r_joint" multiplier="-1" offset="0" />
-  </joint>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <geometry>
+      <mesh filename="package://armpi_gazebo/meshes/l_out_link.STL" />
+    </geometry>
+  </collision>
+</link>
 
-  <link name="l_out_link">
-    <inertial>
-      <origin xyz="0.00921 -0.00318 0.00148" rpy="0 0 0" />
-      <mass value="0.00384736003408795" />
-      <inertia
-        ixx="3.94299868139123E-08"
-        ixy="-7.61977962794645E-09"
-        ixz="8.28793192035387E-12"
-        iyy="8.50830170189603E-07"
-        iyz="3.37534642199275E-12"
-        izz="8.77381368600846E-07" />
-    </inertial>
+<gazebo reference="l_out_link">
+  <material>Gazebo/Grey</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>false</selfCollide>
+</gazebo>
 
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://armpi_gazebo/meshes/l_out_link.STL" />
-      </geometry>
-      <material name="">
-        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
-      </material>
-    </visual>
+<joint name="l_out_joint" type="revolute">
+  <origin xyz="0.0027 0.02888 0.003" rpy="-0 0 1.7582" />
+  <parent link="l_in_link" />
+  <child link="l_out_link" />
+  <axis xyz="0 0 -1" />
+  <limit lower="-3" upper="3" effort="20" velocity="5" />
+  <mimic joint="r_joint" multiplier="1" offset="0" />
+</joint>
 
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://armpi_gazebo/meshes/l_out_link.STL" />
-      </geometry>
-    </collision>
-  </link>
-
-
-
-  <!-- ? l_out_link ?? Gazebo ??????? -->
-  <gazebo reference="l_out_link">
-    <material>Gazebo/Grey</material>
-    <mu1>0.2</mu1>
-    <mu2>0.2</mu2>
-    <selfCollide>false</selfCollide>
-  </gazebo>
-
-  <joint name="l_out_joint" type="revolute">
-    <origin xyz="0.0027 0.02888 0.003" rpy="-0 0 1.7582" />
-    <parent link="l_in_link" />
-    <child link="l_out_link" />
-    <axis xyz="0 0 -1" />
-    <limit lower="-3" upper="3" effort="20" velocity="5" />
-    <mimic joint="r_joint" multiplier="1" offset="0" />
-  </joint>
-
-  <!-- ?? Gazebo ??????? -->
-  <gazebo>
+<!-- configuration mimic -->
+<gazebo>
+  <!-- l_joint_plugin -->
   <plugin name="mimic_l_joint_plugin" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
     <joint>r_joint</joint>
     <mimicJoint>l_joint</mimicJoint>
     <multiplier>-1.0</multiplier>
     <offset>0.0</offset>
-    <maxEffort>20.0</maxEffort>
+    <maxEffort>50.0</maxEffort>
     <hasPID>true</hasPID>
-  <pid_p>1.0</pid_p>
-  <pid_i>0.0</pid_i>
-  <pid_d>0.1</pid_d>
+    <pid_p>0.5</pid_p>
+    <pid_i>0.0</pid_i>
+    <pid_d>0.1</pid_d>
+    <i_clamp>0.1</i_clamp>
   </plugin>
+  
+  <!-- r_in_joint_plugin -->
   <plugin name="mimic_r_in_joint_plugin" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
     <joint>r_joint</joint>
     <mimicJoint>r_in_joint</mimicJoint>
     <multiplier>1.0</multiplier>
     <offset>0.0</offset>
-    <maxEffort>20.0</maxEffort>
+    <maxEffort>50.0</maxEffort>
     <hasPID>true</hasPID>
-  <pid_p>1.0</pid_p>
-  <pid_i>0.0</pid_i>
-  <pid_d>0.1</pid_d>
+    <pid_p>0.1</pid_p>
+    <pid_i>0.0</pid_i>
+    <pid_d>0.0</pid_d>
   </plugin>
+  
+  <!-- l_in_joint -->
   <plugin name="mimic_l_in_joint_plugin" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
     <joint>r_joint</joint>
     <mimicJoint>l_in_joint</mimicJoint>
     <multiplier>-1.0</multiplier>
     <offset>0.0</offset>
-    <maxEffort>20.0</maxEffort>
+    <maxEffort>50.0</maxEffort>
     <hasPID>true</hasPID>
-  <pid_p>1.0</pid_p>
-  <pid_i>0.0</pid_i>
-  <pid_d>0.1</pid_d>
+    <pid_p>0.1</pid_p>
+    <pid_i>0.0</pid_i>
+    <pid_d>0.0</pid_d>
   </plugin>
+  
+  <!-- r_out_joint_plugin -->
   <plugin name="mimic_r_out_joint_plugin" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
     <joint>r_joint</joint>
     <mimicJoint>r_out_joint</mimicJoint>
     <multiplier>1.0</multiplier>
     <offset>0.0</offset>
-    <maxEffort>20.0</maxEffort>
+    <maxEffort>50.0</maxEffort>
     <hasPID>true</hasPID>
-  <pid_p>1.0</pid_p>
-  <pid_i>0.0</pid_i>
-  <pid_d>0.1</pid_d>
+    <pid_p>0.1</pid_p>
+    <pid_i>0.0</pid_i>
+    <pid_d>0.0</pid_d>
   </plugin>
+  
+  <!-- l_out_joint_plugin -->
   <plugin name="mimic_l_out_joint_plugin" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
     <joint>r_joint</joint>
     <mimicJoint>l_out_joint</mimicJoint>
     <multiplier>1.0</multiplier>
     <offset>0.0</offset>
-    <maxEffort>20.0</maxEffort>
+    <maxEffort>50.0</maxEffort>
     <hasPID>true</hasPID>
-  <pid_p>1.0</pid_p>
-  <pid_i>0.0</pid_i>
-  <pid_d>0.1</pid_d>
+    <pid_p>0.1</pid_p>
+    <pid_i>0.0</pid_i>
+    <pid_d>0.0</pid_d>
   </plugin>
 </gazebo>
 
+<!-- transmission for mimic joint -->
+<transmission name="trans_r_in_joint">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="r_in_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="motor_r_in_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+<transmission name="trans_r_out_joint">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="r_out_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="motor_r_out_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+<transmission name="trans_l_in_joint">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="l_in_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="motor_l_in_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+<transmission name="trans_l_out_joint">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="l_out_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="motor_l_out_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
 
 
-  <!-- ? grasping_frame ????,???????? -->
-  <gazebo reference="grasping_frame">
-    <material>Gazebo/Red</material>
-    <gravity>false</gravity>
-  </gazebo>
-
+<gazebo reference="grasping_frame">
+  <material>Gazebo/Red</material>
+  <gravity>false</gravity>
+</gazebo>
 
 <!-- Gazebo ROS plugin -->
 <gazebo>
@@ -893,30 +926,28 @@
     <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
     <legacyModeNS>false</legacyModeNS>
     <robotParam>/robot_description</robotParam>
-
   </plugin>
 </gazebo>
 
+<!-- gazebo plugin -->
+<gazebo>
+  <plugin name="gazebo_grasp_fix" filename="libgazebo_grasp_fix.so">
+    <arm>
+      <arm_name>armpi_fpv</arm_name>
+      <palm_link>link5</palm_link>
+      <gripper_link>r_link</gripper_link>
+      <gripper_link>l_link</gripper_link>
+      <gripper_link>r_out_link</gripper_link>
+      <gripper_link>l_out_link</gripper_link>
+    </arm>
+    <max_grip_count>10</max_grip_count>
+    <grip_count_threshold>5</grip_count_threshold>
+    <update_rate>8</update_rate>
+    <disable_collisions_on_attach>1</disable_collisions_on_attach>
+    <release_tolerance>0.003</release_tolerance>
+  </plugin>
+</gazebo>
 
-
-
-  <!-- ?????? -->
-  <gazebo>
-   <plugin name="gazebo_grasp_fix" filename="libgazebo_grasp_fix.so">
-  <arm>
-    <arm_name>armpi_fpv</arm_name>
-    <palm_link>link5</palm_link>
-    <gripper_link>r_link</gripper_link>
-    <gripper_link>l_link</gripper_link>
-  </arm>
-  <max_grip_count>8</max_grip_count>
-  <grip_count_threshold>4</grip_count_threshold>
-  <update_rate>4</update_rate>
-  <disable_collisions_on_attach>0</disable_collisions_on_attach>
-  <release_tolerance>0.005</release_tolerance>
-</plugin>
-
-  </gazebo>
 
 
 </robot>
