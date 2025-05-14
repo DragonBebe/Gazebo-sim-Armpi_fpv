@@ -27,8 +27,8 @@ arm_controller:
   # 大幅降低PID参数
   gains:
     joint1: {p: 1, d: 0.0, i: 0, i_clamp: 0.0}
-    joint2: {p: 1, d: 0.0, i: 0, i_clamp: 0.0}
-    joint3: {p: 1, d: 0.0, i: 0.1, i_clamp: 0.0}
+    joint2: {p: 0.5, d: 0.0, i: 0.1, i_clamp: 0.0}
+    joint3: {p: 0.5, d: 0.0, i: 0.1, i_clamp: 0.0}
     joint4: {p: 1, d: 0.0, i: 0, i_clamp: 0.0}
     joint5: {p: 1, d: 0.0, i: 0, i_clamp: 0.0}
   # 更宽松的约束
@@ -51,12 +51,12 @@ gripper_controller:
   type: effort_controllers/JointTrajectoryController
   joints: ['r_joint', 'l_joint', 'r_in_joint', 'r_out_joint', 'l_in_joint', 'l_out_joint']
   gains:
-    r_joint: {p: 0.5, i: 0.0, d: 0.1, i_clamp: 0.1}
-    l_joint: {p: 0.5, i: 0.0, d: 0.1, i_clamp: 0.1}
-    r_in_joint: {p: 0.01, i: 0.0, d: 0.0, i_clamp: 0.0}
-    r_out_joint: {p: 0.01, i: 0.0, d: 0.0, i_clamp: 0.0}
-    l_in_joint: {p: 0.01, i: 0.0, d: 0.0, i_clamp: 0.0}
-    l_out_joint: {p: 0.01, i: 0.0, d: 0.0, i_clamp: 0.0}
+    r_joint: {p: 0.5, i: 0.0, d: 0.01, i_clamp: 0.1}
+    l_joint: {p: 0.5, i: 0.0, d: 0.01, i_clamp: 0.1}
+    r_in_joint: {p: 0.01, i: 0.0, d: 0.0001, i_clamp: 0.0}
+    r_out_joint: {p: 0.01, i: 0.0, d: 0.0001, i_clamp: 0.0}
+    l_in_joint: {p: 0.01, i: 0.0, d: 0.0001, i_clamp: 0.0}
+    l_out_joint: {p: 0.01, i: 0.0, d: 0.0001, i_clamp: 0.0}
   joint_limit_margin: 0.1
   constraints:
     goal_time: 1.0

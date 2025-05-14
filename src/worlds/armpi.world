@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <world name="default">
+    <!-- 标准组件 -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    
+    <!-- 添加一个平台 -->
+    <model name="platform">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>1 1 0.1</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>1 1 0.1</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+      <pose>0 0 0.05 0 0 0</pose>
+    </model>
+
+    <!-- 物理属性设置 -->
+    <physics type="ode">
+      <real_time_update_rate>100</real_time_update_rate>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>0.1</real_time_factor>
+      <ode>
+        <solver>
+         <type>quick</type> <!-- 使用quick求解器 -->
+         <iters>100</iters> <!-- 适中的迭代次数 -->
+         <sor>1.3</sor>     <!-- 松弛因子 -->
+        </solver>
+        <constraints>
+          <cfm>0.01</cfm>
+          <erp>0.2</erp>
+          <contact_max_correcting_vel>10.0</contact_max_correcting_vel>
+          <contact_surface_layer>0.01</contact_surface_layer>
+        </constraints>
+      </ode>
+    </physics>
+    
+    <!-- 其他可能存在的设置 -->
+  </world>
+</sdf>
+

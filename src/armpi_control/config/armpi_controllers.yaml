@@ -1,11 +1,23 @@
-# ArmPi控制器配置
-
+# 关节状态控制器 - 负责发布所有关节的状态
 joint_state_controller:
   type: joint_state_controller/JointStateController
-  publish_rate: 125
+  publish_rate: 50
+  joints:
+    - joint1
+    - joint2
+    - joint3
+    - joint4
+    - joint5
+    - r_joint
+    - r_in_joint
+    - r_out_joint
+    - l_joint
+    - l_in_joint
+    - l_out_joint
 
-# 轨迹控制器 - 使用effort接口
-eff_joint_traj_controller:
+
+# 机械臂主体控制器 - 控制机械臂的5个主要关节
+arm_controller:
   type: effort_controllers/JointTrajectoryController
   joints:
     - joint1
@@ -14,11 +26,11 @@ eff_joint_traj_controller:
     - joint4
     - joint5
   gains:
-    joint1: {p: 4000, d: 200, i: 1, i_clamp: 1}
-    joint2: {p: 10000, d: 200, i: 1, i_clamp: 1}
-    joint3: {p: 2000, d: 20, i: 1, i_clamp: 1}
-    joint4: {p: 500, d: 1, i: 1, i_clamp: 1}
-    joint5: {p: 500, d: 1, i: 1, i_clamp: 1}
+    joint1: {p: 40, d: 2, i: 1, i_clamp: 1}
+    joint2: {p: 10, d: 2, i: 1, i_clamp: 1}
+    joint3: {p: 2, d: 2, i: 1, i_clamp: 1}
+    joint4: {p: 5, d: 1, i: 1, i_clamp: 1}
+    joint5: {p: 5, d: 1, i: 1, i_clamp: 1}
   constraints:
     goal_time: 0.6
     stopped_velocity_tolerance: 0.05
@@ -33,43 +45,7 @@ eff_joint_traj_controller:
 
 # 夹爪控制器
 gripper_controller:
-  type: effort_controllers/JointTrajectoryController
-  joints:
-    - r_joint
-    - l_joint
-  gains:
-    r_joint: {p: 100, d: 10, i: 0, i_clamp: 1}
-    l_joint: {p: 100, d: 10, i: 0, i_clamp: 1}
-  constraints:
-    goal_time: 0.6
-    stopped_velocity_tolerance: 0.05
-    r_joint: {trajectory: 0.1, goal: 0.1}
-    l_joint: {trajectory: 0.1, goal: 0.1}
-  stop_trajectory_duration: 0.5
-  state_publish_rate: 125
-  action_monitor_rate: 10
-
-# 夹爪内部关节控制器
-gripper_inner_controller:
-  type: effort_controllers/JointGroupPositionController
-  joints:
-    - r_in_joint
-    - r_out_joint
-    - l_in_joint
-    - l_out_joint
-  gains:
-    r_in_joint: {p: 50, d: 5, i: 0, i_clamp: 1}
-    r_out_joint: {p: 50, d: 5, i: 0, i_clamp: 1}
-    l_in_joint: {p: 50, d: 5, i: 0, i_clamp: 1}
-    l_out_joint: {p: 50, d: 5, i: 0, i_clamp: 1}
-
-# 关节组控制器
-joint_group_eff_controller:
-  type: effort_controllers/JointGroupEffortController
-  joints:
-    - joint1
-    - joint2
-    - joint3
-    - joint4
-    - joint5
+  type: effort_controllers/JointPositionController
+  joint: r_joint
+  pid: {p: 1, i: 0, d: 10}
 
