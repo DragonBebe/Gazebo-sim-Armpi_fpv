@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<launch>
+  <!--
+    加载UR5到Gazebo中，确保机器人底座位于地面上(z=0)
+    这个文件基于原始的ur5_bringup.launch，但修改了机器人的初始位置
+  -->
+
+  <!--Robot description and related parameter files -->
+  <arg name="robot_description_file" default="$(find ur_gazebo)/launch/inc/load_ur5.launch.xml" doc="Launch file which populates the 'robot_description' parameter."/>
+  <arg name="joint_limit_params" default="$(find ur_description)/config/ur5/joint_limits.yaml"/>
+  <arg name="kinematics_params" default="$(find ur_description)/config/ur5/default_kinematics.yaml"/>
+  <arg name="physical_params" default="$(find ur_description)/config/ur5/physical_parameters.yaml"/>
+  <arg name="visual_params" default="$(find ur_description)/config/ur5/visual_parameters.yaml"/>
+
+  <!-- Controller configuration -->
+  <arg name="controller_config_file" default="$(find ur_gazebo)/config/ur5_controllers.yaml" doc="Config file used for defining the ROS-Control controllers."/>
+  <arg name="controllers" default="joint_state_controller eff_joint_traj_controller" doc="Controllers that are activated by default."/>
+  <arg name="stopped_controllers" default="joint_group_eff_controller" doc="Controllers that are initally loaded, but not started."/>
+
+  <!-- robot_state_publisher configuration -->
+  <arg name="tf_prefix" default="" doc="tf_prefix used for the robot."/>
+  <arg name="tf_pub_rate" default="125" doc="Rate at which robot_state_publisher should publish transforms."/>
+
+  <!-- Gazebo parameters -->
+  <arg name="paused" default="false" doc="Starts Gazebo in paused mode" />
+  <arg name="gui" default="true" doc="Starts Gazebo gui" />
+  
+  <!-- 机器人初始位置参数 -->
+  <arg name="x" default="0.0" doc="Initial X position of the robot"/>
+  <arg name="y" default="0.0" doc="Initial Y position of the robot"/>
+  <arg name="z" default="0.0" doc="Initial Z position of the robot"/>
+  <arg name="roll" default="0.0" doc="Initial roll rotation of the robot"/>
+  <arg name="pitch" default="0.0" doc="Initial pitch rotation of the robot"/>
+  <arg name="yaw" default="0.0" doc="Initial yaw rotation of the robot"/>
+
+  <!-- Load urdf on the parameter server -->
+  <include file="$(arg robot_description_file)">
+    <arg name="joint_limit_params" value="$(arg joint_limit_params)"/>
+    <arg name="kinematics_params" value="$(arg kinematics_params)"/>
+    <arg name="physical_params" value="$(arg physical_params)"/>
+    <arg name="visual_params" value="$(arg visual_params)"/>
+  </include>
+
+  <!-- Robot state publisher -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="$(arg tf_pub_rate)" />
+    <param name="tf_prefix" value="$(arg tf_prefix)" />
+  </node>
+
+  <!-- 启动Gazebo -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="worlds/empty.world"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="gui" value="$(arg gui)"/>
+  </include>
+  
+  <!-- 将机器人模型加载到Gazebo中，确保z=0 -->
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" 
+        args="-urdf -model ur5 -param robot_description
+              -x $(arg x) -y $(arg y) -z $(arg z)
+              -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)"
+        output="screen" />
+  
+  <!-- 加载控制器 -->
+  <rosparam file="$(arg controller_config_file)" command="load"/>
+  
+  <!-- 启动控制器 -->
+  <node name="ros_control_controller_spawner" pkg="controller_manager" type="spawner"
+        args="$(arg controllers)" output="screen" respawn="false" />
+  
+  <!-- 加载但不启动控制器 -->
+  <node name="ros_control_stopped_spawner" pkg="controller_manager" type="spawner"
+        args="--stopped $(arg stopped_controllers)" output="screen" respawn="false" />
+</launch>
+

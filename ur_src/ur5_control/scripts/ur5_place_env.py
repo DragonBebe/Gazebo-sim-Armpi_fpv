@@ -103,8 +103,7 @@ class UR5PickPlace:
         self.current_joint_values = list(self.home_position)
         
         # 吸盘偏移
-        self.suction_offset = 0.05  # 吸盘与末端执行器的垂直偏移距离(米)
-        self.suction_offset_ver = 0.02  # 吸盘与末端执行器的水平偏移距离(米)
+        self.suction_offset = 0.2  # 吸盘与末端执行器的偏移距离(米)
         
         # 移动到初始位置
         self.move_to_joint_positions(self.home_position)
@@ -263,7 +262,7 @@ class UR5PickPlace:
             return False
         
         # 计算预抓取位置 (在方块顶部上方10cm)
-        pre_pick_position = [top_center[0], top_center[1], top_center[2] + 0.1]
+        pre_pick_position = [top_center[0], top_center[1], top_center[2] + 0.2]
         
         # 移动到预抓取位置
         if not self.move_to_cartesian_pose(pre_pick_position, duration=2.0):
@@ -273,7 +272,7 @@ class UR5PickPlace:
         rospy.loginfo("已移动到预抓取位置")
         
         # 计算抓取位置 (精确到方块顶部)
-        pick_position = [top_center[0] + self.suction_offset_ver, top_center[1] + self.suction_offset_ver, top_center[2] + self.suction_offset]
+        pick_position = [top_center[0], top_center[1], top_center[2] + self.suction_offset]
         
         # 移动到抓取位置
         if not self.move_to_cartesian_pose(pick_position, duration=1.0):
